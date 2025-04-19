@@ -5,8 +5,7 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-export default function ContactForm() {
-  const [image, setImage] = useState("")
+export default function ContactForm({image}:{image:string}) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -47,18 +46,6 @@ export default function ContactForm() {
     }
   };
 
-  useEffect(()=>{
-    async function fetchData(){
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ui-images/get/67fd500eec60bc9f0fcd608d`);
-                const data = await res.data
-                setImage(data.contactImage)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchData()
-  },[])
 
   return (
     <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
@@ -184,7 +171,7 @@ export default function ContactForm() {
         {/* Contact Information on the right with a full card-filling image */}
         <div className="relative bg-gray-100 p-8 rounded-lg h-[800px]  w-full">
           <Image
-            src={image || `/THASEEN_FW242590.jpg`} // Ensure the image is in the public folder
+            src={image } // Ensure the image is in the public folder
             alt={image}
             layout="fill"
             objectFit="cover"

@@ -156,7 +156,7 @@ export async function POST(req) {
     const { cart, shippingData, totalAmount } = await req.json();
 
     // Save the order to MongoDB
-    const order = await OrderModel.create({
+     await OrderModel.create({
       shippingData,
       cart,
       totalAmount,

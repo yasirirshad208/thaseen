@@ -16,7 +16,7 @@ export default function Category() {
         const fetchCategories = async () => {
             try {
                 const res = await axios.get('/api/order/get');
-                setOrders(res.data);
+                setOrders(res.data.orders);
                 console.log(res.data)
             } catch (err: any) {
                 console.log(err)

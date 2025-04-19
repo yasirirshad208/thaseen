@@ -16,7 +16,11 @@ export async function GET(req: Request) {
 
     const decoded = verifyToken(token);
 
-    const orders = await OrderModel.find({"shippingData.email":decoded.email})
+    if (!decoded) {
+      return Response.json({ success: false, message: 'Invalid token' }, { status: 401 });
+    }
+
+    const orders = await OrderModel.find({"shippingData.email":decoded.email}).sort({createdAt:-1})
     if (!orders) {
       return Response.json({ success: false, message: 'User not found' }, { status: 404 });
     }

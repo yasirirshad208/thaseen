@@ -7,10 +7,7 @@ export async function GET() {
 
     const orders = await OrderModel.find().sort({ createdAt: -1 });
 
-    return new Response(JSON.stringify(orders), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return Response.json({ success: true, orders }, { status: 200 });
   } catch (error) {
     console.error("Error fetching orders:", error);
     return new Response(
