@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import OrderModel from "@/models/Order";
 import dbConnect from "@/lib/dbConnect"; // your MongoDB connection util
 
