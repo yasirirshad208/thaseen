@@ -11,7 +11,6 @@ export default async function HomePage() {
 
 const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ui-images/get/67fd500eec60bc9f0fcd608d`, { cache: 'no-store' });
 if(!res.ok){
-  console.error("Error fetching data:", res.statusText);
   return (
     <div>
       <NavBar />
