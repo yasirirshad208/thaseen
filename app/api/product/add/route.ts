@@ -57,20 +57,12 @@ export async function POST(request: Request) {
 
 
         await newProduct.save();
-<<<<<<< HEAD
-        console.log(newProduct)
-=======
->>>>>>> 300f77b08c091cd14165b75fd02c7d03817097cc
-
 
         return Response.json(
             {
                 success: true,
                 message: 'product created successfully',
-<<<<<<< HEAD
                 product:newProduct
-=======
->>>>>>> 300f77b08c091cd14165b75fd02c7d03817097cc
             },
             { status: 201 }
         );
