@@ -21,7 +21,7 @@ const BestSeller: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `/api/product/get?bestSller=true`,
+          `/api/product/get?bestSeller=true`,
       
         );
 

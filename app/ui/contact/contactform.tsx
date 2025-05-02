@@ -171,7 +171,7 @@ export default function ContactForm({image}:{image:string}) {
         {/* Contact Information on the right with a full card-filling image */}
         <div className="relative bg-gray-100 p-8 rounded-lg h-[800px]  w-full">
           <Image
-            src={image } // Ensure the image is in the public folder
+            src={image} // Ensure the image is in the public folder
             alt={image}
             layout="fill"
             objectFit="cover"
