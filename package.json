@@ -38,6 +38,7 @@
     "react-international-phone": "^4.4.0",
     "react-phone-number-input": "^3.4.10",
     "react-quill": "^2.0.0",
+    "sharp": "^0.34.1",
     "stripe": "^17.5.0",
     "swiper": "^11.1.14",
     "uuid": "^11.1.0",

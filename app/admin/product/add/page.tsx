@@ -45,6 +45,7 @@ export default function AddProduct() {
     // });;
 
     const [collectionId, setCollectionId] = useState("");
+    const [productId, setProductId] = useState("");
     const [categories, setCategories] = useState<Category[]>([]);
     const [collections, setCollections] = useState<Collection[]>([]);
     
@@ -155,7 +156,6 @@ export default function AddProduct() {
             const res = await axios.post('/api/product/add', form);
             if (res.data.success) {
                 if(collectionId){
-
                     await addToCollection(res.data.product._id)
                 }
                 toast.success('Product added successfully ✅');
@@ -187,25 +187,31 @@ export default function AddProduct() {
 
     const addToCollection = async (productId:string) => {
 
-        const collection:any = collections.filter((sub) =>
-            sub._id === collectionId
-        )
 
+        const matchedCollection = collections.find((sub: any) => sub._id === collectionId);
 
-        const preselected = collection[0].products.map((product:any)=>{
-            return product._id;
-
-        });
-        const selectedOptions = [...preselected, productId];
-
+        if (!matchedCollection) {
+          return;
+        }
+        
+        const preselected = matchedCollection.products
+        ?.map((item: any) => {
+          if (item && typeof item === 'object' && item._id) return item._id;
+          if (typeof item === 'string') return item;
+          return null;
+        })
+        .filter((id: any) => !!id); // remove nulls
+      
+      const selectedOptions = [productId, ...preselected];
+        
 
         try {
             const res = await axios.put('/api/collection/update', {
-                id: collection[0]._id,
-                name: collection[0].name,
-                image: collection[0].image,
-                category: collection[0].category,
-                subCategory: collection[0].subCategory,
+                id: matchedCollection._id,
+                name: matchedCollection.name,
+                image: matchedCollection.image,
+                category: matchedCollection.category,
+                subCategory: matchedCollection.subCategory,
                 products: selectedOptions,
             });
 
