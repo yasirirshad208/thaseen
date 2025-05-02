@@ -146,7 +146,7 @@ export default function Category() {
                                                         className={`border text-sm rounded-md p-1 focus:outline-none
       ${order.deliveryStatus === 'delivered' ? 'bg-green-100 text-green-700 border-green-300' : ''}
       ${order.deliveryStatus === 'pending' ? 'bg-yellow-100 text-yellow-700 border-yellow-300' : ''}
-      ${order.deliveryStatus === 'accepted' ? 'bg-blue-100 text-blue-700 border-blue-300' : ''}
+      ${order.deliveryStatus === 'accepted' ? 'bg-gray-100 text-gray-700 border-gray-300' : ''}
       ${order.deliveryStatus === 'in-process' ? 'bg-orange-100 text-orange-700 border-orange-300' : ''}
       ${order.deliveryStatus === 'dispatched' ? 'bg-blue-100 text-blue-700 border-blue-300' : ''}`
                                                         }

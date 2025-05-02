@@ -108,7 +108,7 @@ export default function UpdateProduct({ params }: { params: { id: string } }) {
                     toast.error('Upload failed:', data.message);
                 }
             } catch (err: any) {
-                toast.error('Error uploading file:', err);
+                toast.error('Error uploading file:', err.response.data.message);
             }
         }
     };
