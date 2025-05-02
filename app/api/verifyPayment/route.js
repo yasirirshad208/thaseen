@@ -38,7 +38,7 @@ export async function POST(req) {
             order.paymentStatus = "succeeded";
             await order.save();
 
-            return new Response(JSON.stringify({ success: true, message: 'Payment succeeded', paymentIntent }), { status: 200 });
+            return new Response(JSON.stringify({ success: true, message: 'Payment succeeded', order, paymentIntent }), { status: 200 });
         } else if (['requires_action', 'requires_payment_method'].includes(paymentIntent.status)) {
             order.paymentStatus = "failed";
             await order.save();

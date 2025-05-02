@@ -327,7 +327,9 @@ export default function AddProduct() {
                     <option value="">Select Collection</option>
                     {collections
                         .filter((sub) =>
-                            sub.category === form.category
+                            form.subCategory
+                        ? sub.category === form.category && sub.subCategory === form.subCategory
+                        : sub.category === form.category
                         )
                         .map((sub) => (
                             <option key={sub._id} value={sub._id}>{sub.name}</option>

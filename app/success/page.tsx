@@ -8,6 +8,7 @@ import useShippingStore from "../store/shippingStore";
 
 export default function SuccessPage() {
   const [paymentIntentId, setPaymentIntentId] = useState<string>("");
+  const [orderId, setOrderId] = useState<string>("");
   const [paymentStatus, setPaymentStatus] = useState<string>(
     "Verifying your payment..."
   );
@@ -38,12 +39,14 @@ export default function SuccessPage() {
       
       if (data.success) {
         setPaymentStatus(
-          "Your payment was successfully verified. You’ll receive a confirmation email shortly."
+          `Hi ${data.order.shippingData.name}, Your payment was successfully verified. You’ll receive a confirmation email shortly.`
         );
+        setOrderId(`T-${data.order.orderId}`)
       } else {
         setPaymentStatus(`Payment verification failed: ${data.message}`);
       }
     } catch (error) {
+      console.log(error)
       setPaymentStatus("Error verifying payment. Please contact support.");
     }
   };
@@ -54,6 +57,9 @@ export default function SuccessPage() {
       <div className="text-center my-20">
         <h1 className="text-3xl font-bold">Thank you for your order!</h1>
         <p className="mt-4">{paymentStatus}</p>
+        {orderId &&(
+          <p className="mt-4">Your Order no is {orderId}</p>
+        )}
       </div>
       <Footer />
     </div>

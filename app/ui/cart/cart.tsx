@@ -100,6 +100,9 @@ const Cart = () => {
                       <strong>SKU:</strong> {item.sku || "N/A"}
                     </p>
                     <p className="mt-1 text-sm text-gray-500">
+                      <strong>Quantity:</strong> {item.quantity || "N/A"}
+                    </p>
+                    <p className="mt-1 text-sm text-gray-500">
                       <strong>Measurements:</strong>{" "}
                       {item.measurements
                         ? Object.entries(item.measurements)

@@ -54,9 +54,9 @@ export default function Add({ params }: { params: { slug: string } }) {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await axios.get('/api/product/get');
+                // const res = await axios.get('/api/product/get');
                 const collectionRes = await axios.get(`/api/collection/get/${params.slug}`);
-                setAllProducts(res.data);
+                setAllProducts(collectionRes.data.products);
                 setId(collectionRes.data._id)
                 setName(collectionRes.data.name)
                 setImage(collectionRes.data.image)
