@@ -21,6 +21,8 @@ export default function UpdateProduct({ params }: { params: { id: string } }) {
         description: '',
     });
 
+    const [disabled, setDisabled] = useState(false)
+
 
     useEffect(() => {
        
@@ -68,6 +70,7 @@ export default function UpdateProduct({ params }: { params: { id: string } }) {
     };
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDisabled(true)
         const files = e.target.files;
         if (files && files.length > 0) {
             const formData = new FormData(); 
@@ -109,6 +112,8 @@ export default function UpdateProduct({ params }: { params: { id: string } }) {
                 }
             } catch (err: any) {
                 toast.error('Error uploading file:', err.response.data.message);
+            }finally{
+                setDisabled(false)
             }
         }
     };
@@ -158,6 +163,7 @@ export default function UpdateProduct({ params }: { params: { id: string } }) {
                 <button
                     type="submit"
                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                    disabled={disabled}
                 >
                     Submit
                 </button>
