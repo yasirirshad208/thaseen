@@ -53,6 +53,7 @@ export default function Add({ params }: { params: { slug: string } }) {
 
     useEffect(() => {
         const fetchProducts = async () => {
+            console.log(params.slug)
             try {
                 // const res = await axios.get('/api/product/get');
                 const collectionRes = await axios.get(`/api/collection/get/${params.slug}`);
@@ -62,6 +63,8 @@ export default function Add({ params }: { params: { slug: string } }) {
                 setImage(collectionRes.data.image)
                 setCategory(collectionRes.data.category)
                 setSubCategory(collectionRes.data.subCategory)
+
+                console.log(collectionRes)
 
                 const preselected = collectionRes.data.products.map((product:any)=>{
                     return product._id;
