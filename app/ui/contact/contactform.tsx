@@ -28,8 +28,9 @@ export default function ContactForm({image}:{image:string}) {
 
     try {
       const res = await axios.post("/api/contact", formData);
+      const ress = await axios.post("/api/send-email", formData);
   
-      if (res) {
+      if (res && ress) {
         toast.success("Message sent!");
         setFormData({
           name: "",

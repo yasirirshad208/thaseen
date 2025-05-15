@@ -46,7 +46,6 @@ export default function SuccessPage() {
         setPaymentStatus(`Payment verification failed: ${data.message}`);
       }
     } catch (error) {
-      console.log(error)
       setPaymentStatus("Error verifying payment. Please contact support.");
     }
   };
