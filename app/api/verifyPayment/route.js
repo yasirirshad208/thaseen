@@ -63,7 +63,7 @@ export async function POST(req) {
       <table style="width: 100%; margin-top: 20px;">
         <tr>
           <td style="font-weight: bold; padding: 8px 0;">Order ID:</td>
-          <td style="padding: 8px 0;">${order.orderId}</td>
+          <td style="padding: 8px 0;">T-${order.orderId}</td>
         </tr>
         <tr>
           <td style="font-weight: bold; padding: 8px 0;">Customer Email:</td>
