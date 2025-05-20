@@ -1,9 +1,13 @@
 import OrderModel from '@/models/Order';
 import Stripe from 'stripe';
+import nodemailer from "nodemailer";
+import dbConnect from '@/lib/dbConnect';
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
+   await dbConnect();
     try {
         const body = await req.json();
         const { sessionId } = body;
