@@ -23,7 +23,7 @@ export default async function EveningWearPage() {
       <NavBar />
       <EveningWearComponent />
       <div>
-        <AppointmentSection title={data[0].title} description={data[0].description} availability={data[0].availibility} contact_info={data[0].contact_info} />
+        <AppointmentSection title={data[0].title || "Book An Appointment"} description={data[0].description || "Scheduling an appointment with Tha Seen is effortless! Simply call or message us, and our dedicated team will help arrange a convenient time for your visit. We look forward to welcoming you."} availability={data[0].availibility || "Monday to Friday, 11:00"} contact_info={data[0].contact_info || "971565761000"} />
       </div>
       <Footer />
     </div>

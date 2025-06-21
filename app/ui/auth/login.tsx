@@ -28,9 +28,9 @@ export default function LoginForm() {
       // Save the token to localStorage
       localStorage.setItem("authToken", response.data.token);
       checkAdmin()
-      router.push("/account");
-    } catch (error) {
-      setLoginMessage("Failed to log in. Please try again.");
+      router.push("/home");
+    } catch (error:any) {
+      setLoginMessage(error.response.data.message);
     }
   };
   return (
