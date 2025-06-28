@@ -20,7 +20,7 @@ type SubCategory = {
 export default function UpdateProduct({ params }: { params: { slug: string } }) {
     const router = useRouter()
     const [form, setForm] = useState({
-        _id:"",
+        _id: "",
         name: '',
         stockStatus: '',
         coverImage: '',
@@ -32,17 +32,17 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
         bestSeller: false,
         category: '',
         subCategory: '',
-        video:"",
-        sale:"",
+        video: "",
+        sale: "",
         sizes: [] as string[]
     });
 
-      const [sizeInput, setSizeInput] = useState('');
+    const [sizeInput, setSizeInput] = useState('');
 
     const [categories, setCategories] = useState<Category[]>([]);
     const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
     const [collections, setCollections] = useState<Collection[]>([]);
-        const [collectionId, setCollectionId] = useState("");
+    const [collectionId, setCollectionId] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,7 +63,7 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
                 const data = res.data
                 setForm((prev) => ({
                     ...prev,
-                    _id:data._id,
+                    _id: data._id,
                     name: data.name,
                     stockStatus: data.stockStatus,
                     coverImage: data.coverImage,
@@ -75,11 +75,11 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
                     bestSeller: data.bestSeller,
                     category: data.category,
                     subCategory: data.subCategory,
-                    video:data.video,
-                    sizes:data.sizes,
-                    sale:data.sale
+                    video: data.video,
+                    sizes: data.sizes,
+                    sale: data.sale
                 }));
-            } catch (error:any) {
+            } catch (error: any) {
                 router.push("/admin/product")
             }
         }
@@ -111,17 +111,17 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files.length > 0) {
-            const formData = new FormData(); 
+            const formData = new FormData();
 
             if (e.target.name === "coverImage") {
                 formData.append("images", files[0]); // single file
-              }else if(e.target.name === "video"){
+            } else if (e.target.name === "video") {
                 formData.append("images", files[0]);
-              } else {
+            } else {
                 Array.from(files).forEach((file) => {
-                  formData.append("images", file); // multiple files, same key
+                    formData.append("images", file); // multiple files, same key
                 });
-              }
+            }
 
             try {
                 const res = await fetch('/api/upload', {
@@ -139,7 +139,7 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
                             ...prev,
                             coverImage: data.urls[0],
                         }));
-                    }else if (e.target.name === "video") {
+                    } else if (e.target.name === "video") {
                         setForm((prev) => ({
                             ...prev,
                             video: data.urls[0],
@@ -169,7 +169,7 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
         try {
             const res = await axios.put('/api/product/update', form);
             if (res.data.success) {
-                if(collectionId){
+                if (collectionId) {
 
                     await addToCollection(form._id)
                 }
@@ -185,24 +185,24 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
 
 
 
-     const addToCollection = async (productId:string) => {
-    
+    const addToCollection = async (productId: string) => {
+
         const matchedCollection = collections.find((sub: any) => sub._id === collectionId);
 
         if (!matchedCollection) {
-          return;
+            return;
         }
-        
+
         const preselected = matchedCollection.products
-        ?.map((item: any) => {
-          if (item && typeof item === 'object' && item._id) return item._id;
-          if (typeof item === 'string') return item;
-          return null;
-        })
-        .filter((id: any) => !!id); // remove nulls
-      
-      const selectedOptions = [productId, ...preselected];
-        
+            ?.map((item: any) => {
+                if (item && typeof item === 'object' && item._id) return item._id;
+                if (typeof item === 'string') return item;
+                return null;
+            })
+            .filter((id: any) => !!id); // remove nulls
+
+        const selectedOptions = [productId, ...preselected];
+
 
         try {
             const res = await axios.put('/api/collection/update', {
@@ -215,7 +215,7 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
             });
 
             if (res.data.success) {
-                
+
             } else {
                 toast.error(res.data.message || 'Something went wrong');
             }
@@ -223,13 +223,13 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
             console.log(err)
             toast.error(err.response?.data?.message || 'Server error');
         }
-        };
+    };
 
     return (
         <section className="p-4">
             <h1 className="text-3xl font-semibold mb-6">Update Product</h1>
             <form onSubmit={handleSubmit} className="grid gap-5">
-            <label className='mb-[-10px]'>Name</label>
+                <label className='mb-[-10px]'>Name</label>
                 <input name="name" placeholder="Product Name" value={form.name} onChange={handleChange} required className="p-2 border rounded" />
                 <label className='mb-[-10px]'>Stock</label>
                 <select name="stockStatus" value={form.stockStatus} onChange={handleChange} className="p-2 border rounded">
@@ -241,7 +241,7 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
                 <label className='mb-[-10px]'>Images</label>
                 <input type='file' multiple name="images" onChange={handleFileChange} className="p-2 border rounded" />
                 <label className='mb-[-10px]'>Video</label>
-                <input type='file' name="video" onChange={handleFileChange}  className="p-2 border rounded" />
+                <input type='file' name="video" onChange={handleFileChange} className="p-2 border rounded" />
                 <label className='mb-[-10px]'>Slug</label>
                 <input name="slug" placeholder="Slug" value={form.slug} onChange={handleChange} required className="p-2 border rounded" />
                 <label className='mb-[-10px]'>SKU</label>
@@ -250,9 +250,9 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
                 <input name="price" type="number" placeholder="Price" value={form.price} onChange={handleChange} required className="p-2 border rounded" />
                 <label className='mb-[-10px]'>Sale</label>
                 <div className='w-full'>
-                <input name="sale" type='number' placeholder="Sale in %" value={form.sale} onChange={handleChange} className="p-2 border rounded" />
-                <div className='mt-0.5 text-[14px] text-gray-500'>If you want to end sale just write 0</div>
-                
+                    <input name="sale" type='number' placeholder="Sale in %" value={form.sale} onChange={handleChange} className="p-2 border rounded" />
+                    <div className='mt-0.5 text-[14px] text-gray-500'>If you want to end sale just write 0</div>
+
                 </div>
                 <label className='mb-[-10px]'>Description</label>
                 <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} required className="p-2 border rounded" />
@@ -262,55 +262,55 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
                 </label>
 
                 <div>
-  <label className="block mb-1">Sizes</label>
-  <div className="flex gap-2 mb-2">
-    <input
-      type="text"
-      value={sizeInput}
-      onChange={(e) => setSizeInput(e.target.value)}
-      placeholder="Enter size like: S, M, L, XL"
-      className="p-2 border rounded"
-    />
-    <button
-      type="button"
-      onClick={() => {
-        if (sizeInput.trim() !== '') {
-          setForm((prev) => ({
-            ...prev,
-            sizes: [...prev.sizes, sizeInput.trim()]
-          }));
-          setSizeInput('');
-        }
-      }}
-      className="px-3 py-2 bg-green-600 text-white rounded"
-    >
-      Add
-    </button>
-  </div>
+                    <label className="block mb-1">Sizes</label>
+                    <div className="flex gap-2 mb-2">
+                        <input
+                            type="text"
+                            value={sizeInput}
+                            onChange={(e) => setSizeInput(e.target.value)}
+                            placeholder="Enter size like: S, M, L, XL"
+                            className="p-2 border rounded"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => {
+                                if (sizeInput.trim() !== '') {
+                                    setForm((prev) => ({
+                                        ...prev,
+                                        sizes: [...prev.sizes, sizeInput.trim()]
+                                    }));
+                                    setSizeInput('');
+                                }
+                            }}
+                            className="px-3 py-2 bg-green-600 text-white rounded"
+                        >
+                            Add
+                        </button>
+                    </div>
 
-  <div className="flex gap-2 flex-wrap">
-    {form.sizes.map((size, index) => (
-      <div
-        key={index}
-        className="flex items-center gap-1 bg-gray-200 text-black px-2 py-1 rounded"
-      >
-        {size}
-        <button
-          type="button"
-          onClick={() => {
-            setForm((prev) => ({
-              ...prev,
-              sizes: prev.sizes.filter((s) => s !== size)
-            }));
-          }}
-          className="ml-1 text-red-500 hover:text-red-700"
-        >
-          &times;
-        </button>
-      </div>
-    ))}
-  </div>
-</div>
+                    <div className="flex gap-2 flex-wrap">
+                        {form.sizes.map((size, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center gap-1 bg-gray-200 text-black px-2 py-1 rounded"
+                            >
+                                {size}
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setForm((prev) => ({
+                                            ...prev,
+                                            sizes: prev.sizes.filter((s) => s !== size)
+                                        }));
+                                    }}
+                                    className="ml-1 text-red-500 hover:text-red-700"
+                                >
+                                    &times;
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
                 <select name="category" value={form.category} onChange={handleChange} required className="p-2 border rounded">
                     <option value="">Select Category</option>
@@ -328,13 +328,13 @@ export default function UpdateProduct({ params }: { params: { slug: string } }) 
                         ))}
                 </select>
 
-                <select name="collection" value={collectionId} onChange={(e)=>setCollectionId(e.target.value)} className="p-2 border rounded">
+                <select name="collection" value={collectionId} onChange={(e) => setCollectionId(e.target.value)} className="p-2 border rounded">
                     <option value="">Select Collection</option>
                     {collections
                         .filter((sub) =>
                             form.subCategory
-                        ? sub.category === form.category && sub.subCategory === form.subCategory
-                        : sub.category === form.category
+                                ? sub.category === form.category && sub.subCategory === form.subCategory
+                                : sub.category === form.category
                         )
                         .map((sub) => (
                             <option key={sub._id} value={sub._id}>{sub.name}</option>

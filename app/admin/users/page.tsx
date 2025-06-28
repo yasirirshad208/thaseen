@@ -26,21 +26,37 @@ export default function Category() {
     }, []);
 
 
-    const handleStatusChange = async (orderId:string, newStatus:string) => {
-            try {
-              const res = await fetch(`/api/users/${orderId}`, {
+    const handleStatusChange = async (orderId: string, newStatus: string) => {
+        try {
+            const res = await fetch(`/api/users/${orderId}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ adminStatus: newStatus }),
-              });
-    
-              // Refresh or update UI state here
-            } catch (error) {
-              toast.error("Error updating admin status");
-            }
-          };
+            });
 
-  
+            // Refresh or update UI state here
+        } catch (error) {
+            toast.error("Error updating admin status");
+        }
+    };
+
+
+    const handleDelete = async (id: string) => {
+        try {
+            const res = await axios.delete(`/api/users/delete/${id}`);
+            if (res.data.success) {
+                toast.success('User deleted successfully ✅');
+    
+            } else {
+                toast.error(res.data.message || 'Something went wrong');
+            }
+            setCategories(categories.filter(c => c._id !== id));
+        } catch (err:any) {
+            toast.error(err?.response?.data?.message || 'Server error');
+        }
+    };
+
+
 
 
     return (
@@ -70,6 +86,7 @@ export default function Category() {
                                             <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Email</th>
                                             <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Phone</th>
                                             <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Admin</th>
+                                            <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
@@ -86,11 +103,29 @@ export default function Category() {
       `
                                                         }
                                                     >
-                                                        <option selected={category.admin ? true:false} value="true">Yes</option>
-                                                        <option value="false" selected={category.admin ? false:true}>No</option>
+                                                        <option selected={category.admin ? true : false} value="true">Yes</option>
+                                                        <option value="false" selected={category.admin ? false : true}>No</option>
                                                     </select>
                                                 </td>
-                                                
+
+                                                <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                                    <button
+                                                        type="button"
+                                                        className="inline-flex mr-2 items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800"
+                                                        onClick={() => handleDelete(category._id)}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                    <Link href={`/admin/users/update/${category._id}`}>
+                                                        <button
+                                                            type="button"
+                                                            className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-green-600 hover:text-green-800"
+                                                        >
+                                                            Update
+                                                        </button>
+                                                    </Link>
+                                                </td>
+
                                             </tr>
                                         ))}
                                         {categories.length === 0 && (

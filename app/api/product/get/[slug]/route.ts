@@ -22,7 +22,6 @@ export async function GET(
 
     return Response.json(product, { status: 200 });
   } catch (error) {
-    console.error(error);
     return Response.json(
       { success: false, message: 'Error fetching product', error },
       { status: 500 }
